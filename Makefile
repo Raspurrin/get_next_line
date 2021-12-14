@@ -6,14 +6,14 @@
 #    By: mialbert <mialbert@student.42wolfsburg.de> +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/12/08 21:37:57 by mialbert          #+#    #+#              #
-#    Updated: 2021/12/08 21:43:00 by mialbert         ###   ########.fr        #
+#    Updated: 2021/12/14 19:55:58 by mialbert         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC = gcc
 CFLAGS = -Wall -Werror -Wextra
-NAME = getnextline.a
-SRCS = getnextline.c 
+NAME = get_next_line.a
+SRCS = get_next_line.c get_next_line_utils.c
 OBJS = $(SRCS.c=.o)
 
 all : $(NAME)
