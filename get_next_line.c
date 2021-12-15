@@ -6,7 +6,7 @@
 /*   By: mialbert <mialbert@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/08 21:14:26 by mialbert          #+#    #+#             */
-/*   Updated: 2021/12/15 10:30:05 by mialbert         ###   ########.fr       */
+/*   Updated: 2021/12/15 10:37:43 by mialbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,12 +50,12 @@ char	*get_next_line(int fd)
 		line = "";
 	buf = malloc(BUF_SIZE * sizeof(char));
 	if (!buf || fd < 0)
-		ft_free(buf);
+		return (ft_free(buf));
 	while (!(ft_strchr(buf, '\n')))
 	{
 		buflen = read(fd, buf, BUF_SIZE);
 		if (buflen <= 0)
-			ft_free(buf);
+			return (ft_free(buf));
 		buf[buflen] = '\0';
 		line = ft_strjoin(line, buf);
 	}
@@ -75,6 +75,6 @@ int	main(void)
 	printf("%s", get_next_line(fd));
 	printf("%s", get_next_line(fd));
 	printf("%s", get_next_line(fd));
-	// printf("%s", get_next_line(fd));
+	printf("%s", get_next_line(fd));
 	return (0);
 }
