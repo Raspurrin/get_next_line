@@ -6,7 +6,7 @@
 /*   By: mialbert <mialbert@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/08 21:14:26 by mialbert          #+#    #+#             */
-/*   Updated: 2021/12/14 23:37:58 by mialbert         ###   ########.fr       */
+/*   Updated: 2021/12/15 10:25:31 by mialbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,13 +15,19 @@
 
 #include <stdio.h>
 
+static void	*ft_free(char *buf)
+{
+	free(buf);
+	return (NULL);
+}
+
 char	*get_next_line(int fd)
 {
-	static char	*remainder;
+	size_t		i;
+	size_t		buflen;
 	char		*line;
 	char		*buf;
-	size_t		blen;
-	size_t		i;
+	static char	*remainder;
 
 	i = 0;
 	if (remainder)
@@ -30,44 +36,38 @@ char	*get_next_line(int fd)
 		line = "";
 	buf = malloc(BUF_SIZE * sizeof(char));
 	if (!buf || fd < 0)
-	{
-		free(buf);
-		return (NULL);
-	}
+		ft_free(buf);
 	while (!(ft_strchr(buf, '\n')))
 	{
-		blen = read(fd, buf, BUF_SIZE);
-		if (blen <= 0)
-		{
-			free (buf);
-			return (NULL);
-		}
-		buf[blen] = '\0';
+		buflen = read(fd, buf, BUF_SIZE);
+		if (buflen <= 0)
+			ft_free(buf);
+		buf[buflen] = '\0';
 		line = ft_strjoin(line, buf);
 	}
 	while (line[i] != '\n')
 		i++;
-	blen = i + 1;
-	while (line[blen])
-		blen++;
-	if ((blen - i - 1) > 0)
-		remainder = ft_substr(line, i + 1, (i + blen - 1));
+	buflen = i + 1;
+	while (line[buflen])
+		buflen++;
+	if ((buflen - i - 1) > 0)
+		remainder = ft_substr(line, i + 1, (i + buflen - 1));
 	line = ft_substr(line, 0, i + 1);
 	return (line);
 }
 
-// int	main(void)
-// {
-// 	int		fd;
+int	main(void)
+{
+	int		fd;
 
-// 	fd = open("test.txt", 0);
-// 	if (!fd)
-// 		return (0);
-// 	printf("%s", get_next_line(fd));
-// 	printf("%s", get_next_line(fd));
-// 	printf("%s", get_next_line(fd));
-// 	printf("%s", get_next_line(fd));
-// 	printf("%s", get_next_line(fd));
-// 	printf("%s", get_next_line(fd));
-// 	return (0);
-// }
+	fd = open("test.txt", 0);
+	if (!fd)
+		return (0);
+	printf("%s", get_next_line(fd));
+	printf("%s", get_next_line(fd));
+	printf("%s", get_next_line(fd));
+	printf("%s", get_next_line(fd));
+	printf("%s", get_next_line(fd));
+	printf("%s", get_next_line(fd));
+	return (0);
+}
