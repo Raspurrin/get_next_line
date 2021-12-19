@@ -6,7 +6,7 @@
 /*   By: mialbert <mialbert@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/17 21:01:25 by mialbert          #+#    #+#             */
-/*   Updated: 2021/12/19 18:17:38 by mialbert         ###   ########.fr       */
+/*   Updated: 2021/12/19 18:20:02 by mialbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@ char	*get_next_line(int fd)
 
 	linelen = 0;
 	line = remainder;
-	buflen = 1;
 	buf = ft_calloc(BUF_SIZE + 1, sizeof(char));
 	if (!buf || fd < 0)
 	{
@@ -34,48 +33,45 @@ char	*get_next_line(int fd)
 	}
 	if (!(ft_strchr(line, '\n')))
 	{
-		while (!(ft_strchr(buf, '\n') && buf[buflen]))
+		while (!(ft_strchr(buf, '\n')))
 		{
 			buflen = read(fd, buf, BUF_SIZE);
-			if (!buf)
-			{
-				free (buf);
-				if (remainder)
-					free (remainder);
-				return (NULL);
-			}
+			// if (!buf)
+			// {
+			// 	free (buf);
+			// 	if (remainder)
+			// 		free (remainder);
+			// 	return (NULL);
+			// }
 			if (buflen == 0)
 			{
 				free (buf);
-				if (line)
-					return (line);
-				return (NULL);
+				free (remainder);
+				return (line);
 			}
 			if (buflen < 0)
 			{
 				free (buf);
+				free (remainder);
 				return (NULL);
 			}
 			buf[buflen] = '\0';
 			line = ft_strjoin(line, buf);
 		}
 	}
-	if (buf == NULL)
-	{
-		free (buf);
-		if (remainder)
-			free (remainder);
-		return (NULL);
-	}
+	// if (buf == NULL)
+	// {
+	// 	free (buf);
+	// 	if (remainder)
+	// 		free (remainder);
+	// 	return (NULL);
+	// }
 	while (line[linelen] != '\n')
 		linelen++;
-	if (line[linelen] == '\n')
-	{
-		linelen++;
-		buflen = (ft_strlen(line) - linelen);
-		remainder = ft_substr(line, linelen, buflen + 1);
-		line = ft_substr(line, 0, linelen + 1);
-	}
+	linelen++;
+	buflen = (ft_strlen(line) - linelen);
+	remainder = ft_substr(line, linelen, buflen + 1);
+	line = ft_substr(line, 0, linelen + 1);
 	return (line);
 }
 
