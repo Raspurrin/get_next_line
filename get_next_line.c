@@ -6,7 +6,7 @@
 /*   By: mialbert <mialbert@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/17 21:01:25 by mialbert          #+#    #+#             */
-/*   Updated: 2021/12/19 20:37:41 by mialbert         ###   ########.fr       */
+/*   Updated: 2021/12/19 21:33:35 by mialbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ char	*get_next_line(int fd)
 	size_t		linelen;
 
 	linelen = 0;
+	
 	line = remainder;
 	// free (remainder);
 	buf = ft_calloc(BUF_SIZE + 1, sizeof(char));
@@ -41,8 +42,10 @@ char	*get_next_line(int fd)
 			{
 				free (buf);
 				// free (remainder);
-				return (line);
-				// return (NULL);
+				if (line)
+					break;
+				free(line);
+				return (NULL);
 			}
 			if (buflen < 0)
 			{
@@ -61,12 +64,16 @@ char	*get_next_line(int fd)
 	// 		free (remainder);
 	// 	return (NULL);
 	// }
-	while (line[linelen] != '\n')
+	// free(remainder);
+	while (line[linelen] != '\n' && line[linelen])
 		linelen++;
-	linelen++;
-	buflen = (ft_strlen(line) - linelen);
-	remainder = ft_substr(line, linelen, buflen + 1);
-	line = ft_substr(line, 0, linelen + 1);
+	if (line[linelen] == '\n')
+	{
+		linelen++;
+		buflen = (ft_strlen(line) - linelen);
+		remainder = ft_substr(line, linelen, buflen + 1);
+		line = ft_substr(line, 0, linelen + 1);
+	}
 	return (line);
 }
 
