@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: mialbert <mialbert@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/12/17 21:01:25 by mialbert          #+#    #+#             */
-/*   Updated: 2021/12/19 21:33:35 by mialbert         ###   ########.fr       */
+/*   Created: 2021/12/20 15:43:34 by mialbert          #+#    #+#             */
+/*   Updated: 2021/12/21 20:56:37 by mialbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,12 +21,11 @@ char	*get_next_line(int fd)
 	char		*line;
 	char		*buf;
 	ssize_t		buflen;
+	size_t		remlen;
 	size_t		linelen;
 
 	linelen = 0;
-	
 	line = remainder;
-	// free (remainder);
 	buf = ft_calloc(BUF_SIZE + 1, sizeof(char));
 	if (!buf || fd < 0)
 	{
@@ -38,21 +37,25 @@ char	*get_next_line(int fd)
 		while (!(ft_strchr(buf, '\n')))
 		{
 			buflen = read(fd, buf, BUF_SIZE);
-			if (buflen == 0)
+			// if (!buf)
+			// {
+			// 	free (buf);
+			// 	if (remainder)
+			// 		free (remainder);
+			// 	return (NULL);
+			// }
+			if (buflen <= 0)
 			{
 				free (buf);
-				// free (remainder);
-				if (line)
-					break;
-				free(line);
 				return (NULL);
 			}
-			if (buflen < 0)
+			if (buflen < BUF_SIZE)
 			{
-				free (buf);
-				// free (remainder);
-				return (NULL);
+				line = ft_strjoin(line, buf);
+				// free (buf);
+				return (line);
 			}
+
 			buf[buflen] = '\0';
 			line = ft_strjoin(line, buf);
 		}
@@ -64,35 +67,36 @@ char	*get_next_line(int fd)
 	// 		free (remainder);
 	// 	return (NULL);
 	// }
-	// free(remainder);
-	while (line[linelen] != '\n' && line[linelen])
+	while (line[linelen] != '\n')
 		linelen++;
-	if (line[linelen] == '\n')
-	{
-		linelen++;
-		buflen = (ft_strlen(line) - linelen);
-		remainder = ft_substr(line, linelen, buflen + 1);
-		line = ft_substr(line, 0, linelen + 1);
-	}
+	linelen++;
+	remlen = (ft_strlen(line) - linelen);
+	// if (buflen != 0)
+	remainder = ft_substr(line, linelen, remlen + 1);
+	line = ft_substr(line, 0, linelen + 1);
 	return (line);
 }
 
-int	main(void)
-{
-	int		fd;
+// int	main(void)
+// {
+// 	int		fd;
 
-	fd = open("test.txt", 0);
-	if (!fd)
-		return (0);
-	printf("%s", get_next_line(fd));
-	printf("%s", get_next_line(fd));
-	printf("%s", get_next_line(fd));
-	printf("%s", get_next_line(fd));
-	printf("%s", get_next_line(fd));
-	printf("%s", get_next_line(fd));
-	printf("%s", get_next_line(fd));
-	printf("%s", get_next_line(fd));
-	printf("%s", get_next_line(fd));
-	close(fd);
-	return (0);
-}
+// 	fd = open("test.txt", 0);
+// 	if (!fd)
+// 		return (0);
+// 	printf("%s", get_next_line(fd));
+// 	printf("%s", get_next_line(fd));
+// 	printf("%s", get_next_line(fd));
+// 	printf("%s", get_next_line(fd));
+// 	printf("%s", get_next_line(fd));
+// 	printf("%s", get_next_line(fd));
+// 	printf("%s", get_next_line(fd));
+// 	printf("%s", get_next_line(fd));
+// 	printf("%s", get_next_line(fd));
+// 	printf("%s", get_next_line(fd));
+// 	printf("%s", get_next_line(fd));
+// 	printf("%s", get_next_line(fd));
+// 	printf("%s", get_next_line(fd));
+// 	close(fd);
+// 	return (0);
+// }
