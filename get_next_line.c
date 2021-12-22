@@ -15,19 +15,19 @@ char	*get_next_line(int fd)
 	size_t		linelen;
 
 	linelen = 0;
-	buflen = 1;
 	line = "";
 	if (buf[0] != '\0')
 		line = ft_strjoin(line, buf);
-	while (!(ft_strchr(buf, '\n')) && buflen != 0)
+	while (!(ft_strchr(buf, '\n')))
 	{
 		ft_memset(buf, '\0', BUF_SIZE);
 		buflen = read(fd, buf, BUF_SIZE);
-		if (buflen < 0)
+		if (buflen <= 0 && ft_strlen(line) == 0)
 			return (NULL);
-		if (buflen < BUF_SIZE)
+		if (buflen < BUF_SIZE && !(ft_strchr(buf, '\n'))) // case of multiple new lines?
 		{
 			line = ft_strjoin(line, buf);
+			ft_memset(buf, '\0', BUF_SIZE);
 			return (line);
 		}
 		buf[buflen] = '\0';
@@ -45,24 +45,15 @@ char	*get_next_line(int fd)
 	return (line);
 }
 
-int	main(void)
-{
-	int		fd;
+// int	main(void)
+// {
+// 	int		fd;
 
-	fd = open("test.txt", 0);
-	if (!fd)
-		return (0);
-	printf("%s", get_next_line(fd));
-	printf("%s", get_next_line(fd));
-	printf("%s", get_next_line(fd));
-	printf("%s", get_next_line(fd));
-	printf("%s", get_next_line(fd));
-	printf("%s", get_next_line(fd));
-	printf("%s", get_next_line(fd));
-	printf("%s", get_next_line(fd));
-	printf("%s", get_next_line(fd));
-	printf("%s", get_next_line(fd));
-	printf("%s", get_next_line(fd));
-	close(fd);
-	return (0);
-}
+// 	fd = open("test.txt", 0);
+// 	if (!fd)
+// 		return (0);
+// 	printf("%s", get_next_line(fd));
+// 	printf("%s", get_next_line(fd));
+// 	close(fd);
+// 	return (0);
+// }
