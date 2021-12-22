@@ -15,47 +15,24 @@ char	*get_next_line(int fd)
 	size_t		linelen;
 
 	linelen = 0;
-	// buf = ft_calloc(BUF_SIZE + 1, sizeof(char));
-	
-	if (fd < 0)
-	{
-		return (NULL);
-	}
+	buflen = 1;
 	line = "";
 	if (buf[0] != '\0')
 		line = ft_strjoin(line, buf);
-	while (!(ft_strchr(buf, '\n')))
+	while (!(ft_strchr(buf, '\n')) && buflen != 0)
 	{
 		ft_memset(buf, '\0', BUF_SIZE);
 		buflen = read(fd, buf, BUF_SIZE);
-		// if (!buf)
-		// {
-		// 	free (buf);
-		// 	if (remainder)
-		// 		free (remainder);
-		// 	return (NULL);
-		// }
-		if (buflen <= 0)
-		{
-			// free (buf);
+		if (buflen < 0)
 			return (NULL);
-		}
 		if (buflen < BUF_SIZE)
 		{
-			// free (buf);
 			line = ft_strjoin(line, buf);
 			return (line);
 		}
 		buf[buflen] = '\0';
 		line = ft_strjoin(line, buf);
 	}
-	// if (buf == NULL)
-	// {
-	// 	free (buf);
-	// 	if (remainder)
-	// 		free (remainder);
-	// 	return (NULL);
-	// }
 	while (line[linelen] != '\n')
 		linelen++;
 	linelen++;
@@ -64,7 +41,6 @@ char	*get_next_line(int fd)
 		ft_strlcpy(buf, line + linelen, buflen + 1);
 	else
 		ft_memset(buf, '\0', BUF_SIZE);
-	// ft_substr(line, linelen, remlen + 1);
 	line = ft_substr(line, 0, linelen + 1);
 	return (line);
 }
