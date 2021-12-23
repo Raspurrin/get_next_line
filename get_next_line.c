@@ -6,7 +6,7 @@
 /*   By: mialbert <mialbert@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/23 21:42:31 by mialbert          #+#    #+#             */
-/*   Updated: 2021/12/23 21:57:14 by mialbert         ###   ########.fr       */
+/*   Updated: 2021/12/23 23:06:56 by mialbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ char	*get_next_line(int fd)
 			free (line);
 			return (NULL);
 		}
-		if (buflen < BUF_SIZE && !(ft_strchr(buf, '\n')))
+		if (buflen < BUF_SIZE && !(ft_strchr(buf, '\n'))) // case of multiple new lines?
 		{
 			line = ft_strjoin(line, buf);
 			ft_memset(buf, '\0', BUF_SIZE);
@@ -70,16 +70,22 @@ char	*get_next_line(int fd)
 	return (line);
 }
 
-int	main(void)
-{
-	int	fd;
+// Rip guys
+// 61. ft_memset(buf, '\0', BUF_SIZE);
+// line = ft_calloc(1, 1);
+// if (!line)
+// 	return (NULL);
+// ----------------------------------
+// int	main(void)
+// {
+// 	int	fd;
 
-	fd = open("test.txt", 0);
-	if (!fd)
-		return (0);
-	printf("%s", get_next_line(fd));
-	printf("%s", get_next_line(fd));
-	printf("%s", get_next_line(fd));
-	close(fd);
-	return (0);
-}
+// 	fd = open("test.txt", 0);
+// 	if (!fd)
+// 		return (0);
+// 	printf("%s", get_next_line(fd));
+// 	printf("%s", get_next_line(fd));
+// 	printf("%s", get_next_line(fd));
+// 	close(fd);
+// 	return (0);
+// }
