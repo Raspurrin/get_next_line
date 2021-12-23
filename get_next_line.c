@@ -1,10 +1,11 @@
 #include "get_next_line.h"
 // #include "get_next_line_utils.c"
 
-#include <stdio.h>
+// merge remainder and buf to avoid allocation of memory for buf
+// memset buf while reading
+// freeing in strjoin and such
 
-// make sure that I can free line in strjoin and before
-// returning line if buflen < BUF_SIZE
+#include <stdio.h>
 
 char	*get_next_line(int fd)
 {
@@ -14,16 +15,20 @@ char	*get_next_line(int fd)
 	size_t		linelen;
 
 	linelen = 0;
-	
+	line = ft_calloc(1, 1);
+	if (!line)
+		return (NULL);
 	if (buf[0] != '\0')
 		line = ft_strjoin(line, buf);
-		
 	while (!(ft_strchr(buf, '\n')))
 	{
 		ft_memset(buf, '\0', BUF_SIZE);
 		buflen = read(fd, buf, BUF_SIZE);
 		if (buflen <= 0 && ft_strlen(line) == 0)
+		{
+			free (line);
 			return (NULL);
+		}
 		if (buflen < BUF_SIZE && !(ft_strchr(buf, '\n'))) // case of multiple new lines?
 		{
 			line = ft_strjoin(line, buf);
@@ -45,27 +50,16 @@ char	*get_next_line(int fd)
 	return (line);
 }
 
-int	main(void)
-{
-	int		fd[8];
-	int		i;
-	char	*line;
+// int	main(void)
+// {
+// 	int		fd;
 
-	i = 4;
-	fd[0] = open("41_no_nl", 0);
-	fd[1] = open("41_with_nl", 0);
-	fd[2] = open("42_no_nl", 0);
-	fd[3] = open("42_with_nl", 0);
-	fd[4] = open("43_no_nl", 0);
-	fd[5] = open("43_with_nl", 0);
-	fd[6] = open("alternate_line_nl_no_nl", 0);
-	fd[7] = open("alternate_line_nl_with_nl", 0);
-	while (i < 5)
-	{
-		line = get_next_line(fd[i]);
-		printf("%s", line);
-		if (!line)
-			i++;
-	}
-	return (0);
-}
+// 	fd = open("test.txt", 0);
+// 	if (!fd)
+// 		return (0);
+// 	printf("%s", get_next_line(fd));
+// 	printf("%s", get_next_line(fd));
+// 	printf("%s", get_next_line(fd));
+// 	close(fd);
+// 	return (0);
+// }
