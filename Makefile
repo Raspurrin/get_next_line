@@ -6,7 +6,7 @@
 #    By: mialbert <mialbert@student.42wolfsburg.de> +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/12/08 21:37:57 by mialbert          #+#    #+#              #
-#    Updated: 2021/12/14 19:55:58 by mialbert         ###   ########.fr        #
+#    Updated: 2021/12/23 14:53:57 by mialbert         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,10 +27,19 @@ $(NAME) : $(OBJS)
 test : 
 	$(CC) $(CFLAGS) $(SRCS) && ./a.out
 
+unittest:
+	cd gnlTester && make && cd ..
+
+valgrind: test
+	@echo ""
+	@valgrind --leak-check=full ./a.out
+
 clean: 
 	rm -f $(OBJS)
 
 fclean : clean
 	rm -f (NAME)
 
-re : fclean all
+re : fclean all 
+
+# .PHONY clean fclean re test valgrind all
