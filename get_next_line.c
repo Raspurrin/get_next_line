@@ -6,7 +6,7 @@
 /*   By: mialbert <mialbert@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/23 21:42:31 by mialbert          #+#    #+#             */
-/*   Updated: 2021/12/24 22:18:29 by mialbert         ###   ########.fr       */
+/*   Updated: 2021/12/25 00:44:24 by mialbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ char	*get_next_line(int fd)
 			free (line);
 			return (NULL);
 		}
-		if (buflen < BUF_SIZE && !(ft_strchr(buf, '\n'))) // case of multiple new lines?
+		if (buflen < BUF_SIZE && !(ft_strchr(buf, '\n')))
 		{
 			line = ft_strjoin(line, buf);
 			ft_memset(buf, '\0', BUF_SIZE);
