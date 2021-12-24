@@ -6,16 +6,12 @@
 /*   By: mialbert <mialbert@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/23 21:42:31 by mialbert          #+#    #+#             */
-/*   Updated: 2021/12/23 23:06:56 by mialbert         ###   ########.fr       */
+/*   Updated: 2021/12/24 22:18:29 by mialbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 // #include "get_next_line_utils.c"
-
-// merge remainder and buf to avoid allocation of memory for buf
-// memset buf while reading
-// freeing in strjoin and such
 
 #include <stdio.h>
 
