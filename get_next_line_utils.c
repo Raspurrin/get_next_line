@@ -6,7 +6,7 @@
 /*   By: mialbert <mialbert@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 19:56:40 by mialbert          #+#    #+#             */
-/*   Updated: 2021/12/23 17:08:48 by mialbert         ###   ########.fr       */
+/*   Updated: 2021/12/25 14:12:01 by mialbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,6 @@ void	ft_bzero(void *src, size_t n)
 		((uint8_t *)src)[i++] = '\0';
 }
 
-
 char	*ft_strchr(const char *str, int32_t c)
 {
 	char	*str2;
@@ -98,16 +97,13 @@ char	*ft_strjoin(char *str1, char *str2)
 	size_t	str2len;
 	char	*out;
 
-	if (!str1 || !str2)
-		return (0);
-	// if (str1)
-		str1len = ft_strlen(str1);
-	// else
-	// 	str1len = 0;
+	if (!str1)
+		return (ft_strdup(str2));
+	str1len = ft_strlen(str1);
 	str2len = ft_strlen(str2);
 	out = ft_calloc((str1len + str2len + 1), sizeof(char));
 	if (!out)
-		return (0);
+		return (NULL);
 	ft_strlcpy(out, str1, str1len + 1);
 	free(str1);
 	ft_strlcpy(out + str1len, str2, str2len + 1);
@@ -134,25 +130,3 @@ char	*ft_substr(char *str, uint32_t start, size_t len)
 	out[len] = '\0';
 	return (out);
 }
-
-
-void	*ft_memset(void *src, int32_t c, size_t n)
-{
-	while (n-- > 0)
-		((uint8_t *)src)[n] = c;
-	return (src);
-}
-
-void	*ft_memcpy(void *dst, const void *src, size_t n)
-{
-	size_t	i;
-
-	i = 0;
-	while (i < n && dst != src)
-	{
-		((uint8_t *)dst)[i] = ((uint8_t *)src)[i];
-		i++;
-	}
-	return (dst);
-}
-
