@@ -6,7 +6,7 @@
 /*   By: mialbert <mialbert@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/23 21:42:31 by mialbert          #+#    #+#             */
-/*   Updated: 2021/12/25 00:44:24 by mialbert         ###   ########.fr       */
+/*   Updated: 2021/12/25 14:07:20 by mialbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ static char	*ft_trim(char *line, char *buf)
 	if (buflen != 0)
 		ft_strlcpy(buf, line + linelen, buflen + 1);
 	else
-		ft_memset(buf, '\0', BUF_SIZE);
+		ft_bzero(buf, BUF_SIZE);
 	line = ft_substr(line, 0, linelen + 1);
 	return (line);
 }
@@ -46,8 +46,9 @@ char	*get_next_line(int fd)
 		line = ft_strjoin(line, buf);
 	while (!(ft_strchr(buf, '\n')))
 	{
-		ft_memset(buf, '\0', BUF_SIZE);
+		ft_bzero(buf, BUF_SIZE);
 		buflen = read(fd, buf, BUF_SIZE);
+		buf[buflen] = '\0';
 		if (buflen <= 0 && ft_strlen(line) == 0)
 		{
 			free (line);
@@ -56,10 +57,9 @@ char	*get_next_line(int fd)
 		if (buflen < BUF_SIZE && !(ft_strchr(buf, '\n')))
 		{
 			line = ft_strjoin(line, buf);
-			ft_memset(buf, '\0', BUF_SIZE);
+			ft_bzero(buf, BUF_SIZE);
 			return (line);
 		}
-		buf[buflen] = '\0';
 		line = ft_strjoin(line, buf);
 	}
 	line = ft_trim(line, buf);
