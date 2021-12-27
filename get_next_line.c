@@ -6,7 +6,7 @@
 /*   By: mialbert <mialbert@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/23 21:42:31 by mialbert          #+#    #+#             */
-/*   Updated: 2021/12/27 20:35:06 by mialbert         ###   ########.fr       */
+/*   Updated: 2021/12/27 23:39:08 by mialbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,9 +32,6 @@ int	gnl_strlen(const char *str)
  * Result:
  * line = "Something is here\\n"
  * remainder = "And"
- * @param line ex: "Something is here\\nAnd"
- * @param remainder This will store the remainder of the line.
- * @return The line up till and including the newline char.
  */
 static char	*ft_trim(char *line, char *remainder)
 {
@@ -59,12 +56,12 @@ static char	*ft_trim(char *line, char *remainder)
  * @brief Reads the full buffersize until finding a newline char
  * and appends this to line each time.
  * @param line Will hold all characters being read in this function.
- * @param buf Holds buffersize amount of chars every single read.
+ * @param buf Temporary storage for every read.
  * @param fd The file descriptor being read from.
  * @return A line including a newline character and possibly characters
- * afterwards or NULL if nothing has been read.
+ * afterwards, the last line without a newline char or NULL if nothing was read.
  */
-static char	*read_line(char	*line, char *buf, int fd)
+static char	*read_line(char *line, char *buf, int fd)
 {
 	ssize_t		buflen;
 
@@ -90,9 +87,9 @@ char	*get_next_line(int fd)
 	static char	buf[BUF_SIZE + 1];
 
 	line = malloc(1 * sizeof(char));
-	line[0] = '\0';
 	if (!line)
 		return (NULL);
+	line[0] = '\0';
 	if (buf[0] != '\0')
 		line = gnl_strjoin(line, buf);
 	line = read_line(line, buf, fd);
