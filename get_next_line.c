@@ -6,7 +6,7 @@
 /*   By: mialbert <mialbert@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/23 21:42:31 by mialbert          #+#    #+#             */
-/*   Updated: 2021/12/27 18:22:06 by mialbert         ###   ########.fr       */
+/*   Updated: 2021/12/27 18:41:46 by mialbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,6 @@ char	*read_line(char	*line, char *buf, int fd)
 
 	while (!(ft_strchr(buf, '\n')))
 	{
-		buf[0] = '\0';
 		buflen = read(fd, buf, BUF_SIZE);
 		buf[buflen] = '\0';
 		if (buflen <= 0 && !line[0])
@@ -50,10 +49,7 @@ char	*read_line(char	*line, char *buf, int fd)
 		}
 		line = ft_strjoin(line, buf);
 		if (buflen < BUF_SIZE && !(ft_strchr(buf, '\n')))
-		{
-			buf[0] = '\0';
 			return (line);
-		}
 	}
 	return (line);
 }
