@@ -6,7 +6,7 @@
 /*   By: mialbert <mialbert@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/23 21:42:31 by mialbert          #+#    #+#             */
-/*   Updated: 2021/12/25 14:07:20 by mialbert         ###   ########.fr       */
+/*   Updated: 2021/12/27 15:54:03 by mialbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ static char	*ft_trim(char *line, char *buf)
 	if (buflen != 0)
 		ft_strlcpy(buf, line + linelen, buflen + 1);
 	else
-		ft_bzero(buf, BUF_SIZE);
+		buf[0] = '\0';
 	line = ft_substr(line, 0, linelen + 1);
 	return (line);
 }
@@ -46,42 +46,40 @@ char	*get_next_line(int fd)
 		line = ft_strjoin(line, buf);
 	while (!(ft_strchr(buf, '\n')))
 	{
-		ft_bzero(buf, BUF_SIZE);
+		buf[0] = '\0';
 		buflen = read(fd, buf, BUF_SIZE);
 		buf[buflen] = '\0';
-		if (buflen <= 0 && ft_strlen(line) == 0)
+		if (buflen <= 0 && !line[0])
 		{
 			free (line);
 			return (NULL);
 		}
+		line = ft_strjoin(line, buf);
 		if (buflen < BUF_SIZE && !(ft_strchr(buf, '\n')))
 		{
-			line = ft_strjoin(line, buf);
-			ft_bzero(buf, BUF_SIZE);
+			buf[0] = '\0';
 			return (line);
 		}
-		line = ft_strjoin(line, buf);
 	}
 	line = ft_trim(line, buf);
 	return (line);
 }
 
-// Rip guys
-// 61. ft_memset(buf, '\0', BUF_SIZE);
-// line = ft_calloc(1, 1);
-// if (!line)
-// 	return (NULL);
-// ----------------------------------
 // int	main(void)
 // {
-// 	int	fd;
+// 	int		fd;
+// 	char	*line;
 
-// 	fd = open("test.txt", 0);
+// 	fd = open("41_no_nl", 0);
 // 	if (!fd)
 // 		return (0);
-// 	printf("%s", get_next_line(fd));
-// 	printf("%s", get_next_line(fd));
-// 	printf("%s", get_next_line(fd));
+// 	while (1 == 1)
+// 	{
+// 		line = get_next_line(fd);
+// 		printf("%s", line);
+// 		if (!line)
+// 			break ;
+// 	}
 // 	close(fd);
 // 	return (0);
 // }
