@@ -6,7 +6,7 @@
 /*   By: mialbert <mialbert@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/23 21:42:31 by mialbert          #+#    #+#             */
-/*   Updated: 2021/12/27 15:54:03 by mialbert         ###   ########.fr       */
+/*   Updated: 2021/12/27 15:57:16 by mialbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 #include <stdio.h>
 
-static char	*ft_trim(char *line, char *buf)
+static char	*ft_trim(char *line, char *remainder)
 {
 	ssize_t		buflen;
 	size_t		linelen;
@@ -26,9 +26,9 @@ static char	*ft_trim(char *line, char *buf)
 	linelen++;
 	buflen = (ft_strlen(line) - linelen);
 	if (buflen != 0)
-		ft_strlcpy(buf, line + linelen, buflen + 1);
+		ft_strlcpy(remainder, line + linelen, buflen + 1);
 	else
-		buf[0] = '\0';
+		remainder[0] = '\0';
 	line = ft_substr(line, 0, linelen + 1);
 	return (line);
 }
