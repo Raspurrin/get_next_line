@@ -6,7 +6,7 @@
 #    By: mialbert <mialbert@student.42wolfsburg.de> +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/12/08 21:37:57 by mialbert          #+#    #+#              #
-#    Updated: 2021/12/23 14:53:57 by mialbert         ###   ########.fr        #
+#    Updated: 2021/12/27 13:49:42 by mialbert         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,7 +25,7 @@ $(NAME) : $(OBJS)
 	ar rcs $(OBJS) $(NAME)
 
 test : 
-	$(CC) $(CFLAGS) $(SRCS) && ./a.out
+	$(CC) -std=c11 $(CFLAGS) -ggdb3 $(SRCS) && ./a.out
 
 unittest:
 	cd gnlTester && make && cd ..
