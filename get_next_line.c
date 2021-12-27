@@ -6,7 +6,7 @@
 /*   By: mialbert <mialbert@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/23 21:42:31 by mialbert          #+#    #+#             */
-/*   Updated: 2021/12/27 15:57:16 by mialbert         ###   ########.fr       */
+/*   Updated: 2021/12/27 18:22:06 by mialbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,10 @@ static char	*ft_trim(char *line, char *remainder)
 	size_t		linelen;
 
 	linelen = 0;
-	while (line[linelen] != '\n')
+	while (line[linelen] != '\n' && line[linelen])
 		linelen++;
-	linelen++;
+	if (line[linelen] == '\n')
+		linelen++;
 	buflen = (ft_strlen(line) - linelen);
 	if (buflen != 0)
 		ft_strlcpy(remainder, line + linelen, buflen + 1);
@@ -33,17 +34,10 @@ static char	*ft_trim(char *line, char *remainder)
 	return (line);
 }
 
-char	*get_next_line(int fd)
+char	*read_line(char	*line, char *buf, int fd)
 {
-	char		*line;
 	ssize_t		buflen;
-	static char	buf[BUF_SIZE + 1];
 
-	line = ft_calloc(1, 1);
-	if (!line)
-		return (NULL);
-	if (buf[0] != '\0')
-		line = ft_strjoin(line, buf);
 	while (!(ft_strchr(buf, '\n')))
 	{
 		buf[0] = '\0';
@@ -61,6 +55,22 @@ char	*get_next_line(int fd)
 			return (line);
 		}
 	}
+	return (line);
+}
+
+char	*get_next_line(int fd)
+{
+	char		*line;
+	static char	buf[BUF_SIZE + 1];
+
+	line = ft_calloc(1, 1);
+	if (!line)
+		return (NULL);
+	if (buf[0] != '\0')
+		line = ft_strjoin(line, buf);
+	line = read_line(line, buf, fd);
+	if (!line)
+		return (NULL);
 	line = ft_trim(line, buf);
 	return (line);
 }
