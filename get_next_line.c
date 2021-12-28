@@ -6,7 +6,7 @@
 /*   By: mialbert <mialbert@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/23 21:42:31 by mialbert          #+#    #+#             */
-/*   Updated: 2021/12/28 14:41:49 by mialbert         ###   ########.fr       */
+/*   Updated: 2021/12/28 17:09:14 by mialbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,13 @@
 
 #include <stdio.h>
 
-int	gnl_strlen(const char *str)
+/**
+ * example txt file being used:
+ * "Something is here"
+ * "And something else"
+ */
+
+static int	gnl_strlen(const char *str)
 {
 	int	i;
 
@@ -28,7 +34,7 @@ int	gnl_strlen(const char *str)
 /**
  * @brief Trims everything after a newline char into the remainder 
  * and the rest into line.
- * example: line = "Something is here\\nAnd"
+ * example: line = "Something is here\\nAnd" 
  * Result:
  * line = "Something is here\\n"
  * remainder = "And"
@@ -55,10 +61,9 @@ static char	*ft_trim(char *line, char *remainder)
 /**
  * @brief Reads BUF_SIZE amount of chars every loop until finding a '\\n'
  * and appends this from buf to line each time.
- * @param line Will hold all characters being read in this function.
- * @param buf Temporary storage for every read.
- * @return A line (including a '\\n'), the last line of the file 
- * or NULL if nothing was read.
+ * ex BUF_SIZE = 11: 
+ * loop 1: Buf = "Something i". Line = "Something i"
+ * loop 2: Buf = "s here\\nAnd" Line = "Something is here\\nAnd"
  */
 static char	*read_line(char *line, char *buf, int fd)
 {
@@ -82,10 +87,10 @@ static char	*read_line(char *line, char *buf, int fd)
 
 /**
  * @brief Get the next line every time the function has been called.
- * line - will hold the line to be returned (including '\\n' if available)
- * buf - temporary storage for BUF_SIZE amount of chars 
+ * line 	 - will hold the line to be returned (including '\\n' if available)
+ * buf 		 - temporary storage for BUF_SIZE amount of chars 
  * remainder - Holds the remainder of the line after '\\n' 
- * (same variable as buf but renamed in ft_trim)
+ * (remainder is the same variable as buf but renamed in ft_trim)
  */
 char	*get_next_line(int fd)
 {
@@ -103,4 +108,23 @@ char	*get_next_line(int fd)
 		return (NULL);
 	line = ft_trim(line, buf);
 	return (line);
+}
+
+int	main(void)
+{
+	int		fd;
+	char	*line;
+
+	fd = open("41_no_nl", 0);
+	if (!fd)
+		return (0);
+	while (1 == 1)
+	{
+		line = get_next_line(fd);
+		printf("%s", line);
+		if (!line)
+			break ;
+	}
+	close(fd);
+	return (0);
 }
