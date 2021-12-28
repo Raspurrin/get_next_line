@@ -6,12 +6,12 @@
 /*   By: mialbert <mialbert@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/23 21:42:31 by mialbert          #+#    #+#             */
-/*   Updated: 2021/12/27 23:39:08 by mialbert         ###   ########.fr       */
+/*   Updated: 2021/12/28 14:03:51 by mialbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
-// #include "get_next_line_utils.c"
+#include "get_next_line_utils.c"
 
 #include <stdio.h>
 
@@ -53,13 +53,12 @@ static char	*ft_trim(char *line, char *remainder)
 }
 
 /**
- * @brief Reads the full buffersize until finding a newline char
+ * @brief Reads the full buffersize until finding a '\\n'
  * and appends this to line each time.
  * @param line Will hold all characters being read in this function.
  * @param buf Temporary storage for every read.
- * @param fd The file descriptor being read from.
- * @return A line including a newline character and possibly characters
- * afterwards, the last line without a newline char or NULL if nothing was read.
+ * @return A line including a '\\n', 
+ * the last line without a '\\n' or NULL if nothing was read.
  */
 static char	*read_line(char *line, char *buf, int fd)
 {
@@ -81,6 +80,12 @@ static char	*read_line(char *line, char *buf, int fd)
 	return (line);
 }
 
+/**
+ * @brief Get the next line every time the function has been called.
+ * line - will hold the line to be returned (including '\\n' if available)
+ * buff - will be temporary storage for BUF_SIZE amount of chars in read_line
+ * And it will hold the remainder of the line after '\\n' in ft_trim
+ */
 char	*get_next_line(int fd)
 {
 	char		*line;
@@ -99,21 +104,21 @@ char	*get_next_line(int fd)
 	return (line);
 }
 
-// int	main(void)
-// {
-// 	int		fd;
-// 	char	*line;
+int	main(void)
+{
+	int		fd;
+	char	*line;
 
-// 	fd = open("41_no_nl", 0);
-// 	if (!fd)
-// 		return (0);
-// 	while (1 == 1)
-// 	{
-// 		line = get_next_line(fd);
-// 		printf("%s", line);
-// 		if (!line)
-// 			break ;
-// 	}
-// 	close(fd);
-// 	return (0);
-// }
+	fd = open("41_no_nl", 0);
+	if (!fd)
+		return (0);
+	while (1 == 1)
+	{
+		line = get_next_line(fd);
+		printf("%s", line);
+		if (!line)
+			break ;
+	}
+	close(fd);
+	return (0);
+}
