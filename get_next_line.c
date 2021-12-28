@@ -6,22 +6,21 @@
 /*   By: mialbert <mialbert@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/23 21:42:31 by mialbert          #+#    #+#             */
-/*   Updated: 2021/12/28 17:09:14 by mialbert         ###   ########.fr       */
+/*   Updated: 2021/12/28 18:07:35 by mialbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
-#include "get_next_line_utils.c"
+// #include "get_next_line_utils.c"
 
 #include <stdio.h>
 
 /**
- * example txt file being used:
+ * example .txt file in my further comments:
  * "Something is here"
  * "And something else"
  */
-
-static int	gnl_strlen(const char *str)
+int	gnl_strlen(const char *str)
 {
 	int	i;
 
@@ -41,7 +40,7 @@ static int	gnl_strlen(const char *str)
  */
 static char	*ft_trim(char *line, char *remainder)
 {
-	ssize_t		buflen;
+	ssize_t		remdrlen;
 	size_t		linelen;
 
 	linelen = 0;
@@ -49,9 +48,9 @@ static char	*ft_trim(char *line, char *remainder)
 		linelen++;
 	if (line[linelen] == '\n')
 		linelen++;
-	buflen = (gnl_strlen(line) - linelen);
-	if (buflen != 0)
-		gnl_strlcpy(remainder, line + linelen, buflen + 1);
+	remdrlen = (gnl_strlen(line) - linelen);
+	if (remdrlen != 0)
+		gnl_strlcpy(remainder, line + linelen, remdrlen + 1);
 	else
 		remainder[0] = '\0';
 	line = gnl_substr(line, 0, linelen + 1);
@@ -86,7 +85,8 @@ static char	*read_line(char *line, char *buf, int fd)
 }
 
 /**
- * @brief Get the next line every time the function has been called.
+ * @brief Get the next line of a file every time the function is called.
+ * Appends the remainder from previous function call to line if present.
  * line 	 - will hold the line to be returned (including '\\n' if available)
  * buf 		 - temporary storage for BUF_SIZE amount of chars 
  * remainder - Holds the remainder of the line after '\\n' 
@@ -110,21 +110,21 @@ char	*get_next_line(int fd)
 	return (line);
 }
 
-int	main(void)
-{
-	int		fd;
-	char	*line;
+// int	main(void)
+// {
+// 	int		fd;
+// 	char	*line;
 
-	fd = open("41_no_nl", 0);
-	if (!fd)
-		return (0);
-	while (1 == 1)
-	{
-		line = get_next_line(fd);
-		printf("%s", line);
-		if (!line)
-			break ;
-	}
-	close(fd);
-	return (0);
-}
+// 	fd = open("41_no_nl", 0);
+// 	if (!fd)
+// 		return (0);
+// 	while (1 == 1)
+// 	{
+// 		line = get_next_line(fd);
+// 		printf("%s", line);
+// 		if (!line)
+// 			break ;
+// 	}
+// 	close(fd);
+// 	return (0);
+// }
