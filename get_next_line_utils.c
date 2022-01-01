@@ -6,7 +6,7 @@
 /*   By: mialbert <mialbert@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/14 19:56:40 by mialbert          #+#    #+#             */
-/*   Updated: 2021/12/27 20:35:06 by mialbert         ###   ########.fr       */
+/*   Updated: 2021/12/28 00:32:48 by mialbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ char	*gnl_strchr(const char *str, int32_t c)
 	char	*str2;
 
 	if (!str)
-		return ("c");
+		return (NULL);
 	if (c < 0 || c > 255)
 		return ((char *)str);
 	str2 = (char *)str;
@@ -58,7 +58,7 @@ char	*gnl_strchr(const char *str, int32_t c)
 		str2++;
 	if (*str2 == c)
 		return (str2);
-	return (0);
+	return (NULL);
 }
 
 char	*gnl_strjoin(char *str1, char *str2)
