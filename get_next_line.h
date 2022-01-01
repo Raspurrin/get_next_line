@@ -6,7 +6,7 @@
 /*   By: mialbert <mialbert@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/08 21:34:14 by mialbert          #+#    #+#             */
-/*   Updated: 2021/12/27 20:35:06 by mialbert         ###   ########.fr       */
+/*   Updated: 2021/12/30 23:35:50 by mialbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,12 @@
 # include <stdlib.h>
 # include <stdint.h>
 # include <unistd.h>
-# include <sys/types.h>
 # include <sys/stat.h>
 # include <fcntl.h>
 
-# define BUF_SIZE 42
+# ifndef BUFFER_SIZE
+#  define BUFFER_SIZE 42
+# endif
 
 /**
  * @brief Every time this function is called one line will be read
