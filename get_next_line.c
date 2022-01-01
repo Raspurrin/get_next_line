@@ -6,14 +6,12 @@
 /*   By: mialbert <mialbert@student.42wolfsburg.de> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/23 21:42:31 by mialbert          #+#    #+#             */
-/*   Updated: 2021/12/28 18:07:35 by mialbert         ###   ########.fr       */
+/*   Updated: 2022/01/01 12:48:14 by mialbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 // #include "get_next_line_utils.c"
-
-#include <stdio.h>
 
 /**
  * example .txt file in my further comments:
@@ -53,14 +51,13 @@ static char	*ft_trim(char *line, char *remainder)
 		gnl_strlcpy(remainder, line + linelen, remdrlen + 1);
 	else
 		remainder[0] = '\0';
-	line = gnl_substr(line, 0, linelen + 1);
-	return (line);
+	return (gnl_substr(line, 0, linelen + 1));
 }
 
 /**
- * @brief Reads BUF_SIZE amount of chars every loop until finding a '\\n'
+ * @brief Reads BUFFER_SIZE amount of chars every loop until finding a '\\n'
  * and appends this from buf to line each time.
- * ex BUF_SIZE = 11: 
+ * example BUFFER_SIZE = 11: 
  * loop 1: Buf = "Something i". Line = "Something i"
  * loop 2: Buf = "s here\\nAnd" Line = "Something is here\\nAnd"
  */
@@ -68,9 +65,10 @@ static char	*read_line(char *line, char *buf, int fd)
 {
 	ssize_t		buflen;
 
-	while (!(gnl_strchr(buf, '\n')))
+	buflen = BUFFER_SIZE;
+	while (!(gnl_strchr(buf, '\n')) && buflen == BUFFER_SIZE)
 	{
-		buflen = read(fd, buf, BUF_SIZE);
+		buflen = read(fd, buf, BUFFER_SIZE);
 		buf[buflen] = '\0';
 		if (buflen <= 0 && !line[0])
 		{
@@ -78,26 +76,24 @@ static char	*read_line(char *line, char *buf, int fd)
 			return (NULL);
 		}
 		line = gnl_strjoin(line, buf);
-		if (buflen < BUF_SIZE && !(gnl_strchr(buf, '\n')))
-			return (line);
 	}
 	return (line);
 }
 
 /**
  * @brief Get the next line of a file every time the function is called.
- * Appends the remainder from previous function call to line if present.
+ * Appends the remainder from the previous function call to line if present.
  * line 	 - will hold the line to be returned (including '\\n' if available)
- * buf 		 - temporary storage for BUF_SIZE amount of chars 
+ * buf 		 - temporary storage for BUFFER_SIZE amount of chars 
  * remainder - Holds the remainder of the line after '\\n' 
  * (remainder is the same variable as buf but renamed in ft_trim)
  */
 char	*get_next_line(int fd)
 {
 	char		*line;
-	static char	buf[BUF_SIZE + 1];
+	static char	buf[BUFFER_SIZE + 1];
 
-	line = malloc(1 * sizeof(char));
+	line = malloc(1);
 	if (!line)
 		return (NULL);
 	line[0] = '\0';
@@ -109,6 +105,8 @@ char	*get_next_line(int fd)
 	line = ft_trim(line, buf);
 	return (line);
 }
+
+// #include <stdio.h>
 
 // int	main(void)
 // {
