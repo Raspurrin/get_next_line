@@ -12,7 +12,7 @@ In this project we learn about memory leaks, static variables, the read function
 + [Tips on writing get_next_line](#tips-on-writing-get_next_line)
 
 ## Read and open function
-[Read()](https://linux.die.net/man/2/read) reads from the given file descriptor in the first argument, into a buffer given by the second and how much is read is determined by the third argument. The return will be how many characters has been read or -1 on error. `read(fd, buffer, count)`.
+[Read()](https://linux.die.net/man/2/read) reads from the given file descriptor in the first argument, into a buffer given by the second and how much is read is determined by the third argument. The return will be how many characters has been read or -1 on error. `read(fd, buffer, count)`. The read function continues where it left of every time you call it.
 
 [Open()](https://man7.org/linux/man-pages/man2/open.2.html) opens a file to the given file descriptor. And then this file descriptor can be used as an argument to get_next_line. You can use flags with this for additional behaviour, like O_CREAT, which will create the file with the given name if it doesn't exist already. 
 ```c
