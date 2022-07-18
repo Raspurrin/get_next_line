@@ -27,23 +27,23 @@ The bigger the BUFFERSIZE, the faster your program will execute, but the more me
 So for instance, you want to read an entire book. In this case, it would be really slow to go through this character by character. And you would probably want to set the BUFFERSIZE quite differently than in the case where you read just one paragraph.
 
 ```c
-char *cheat_get_next_line(int32_t fd) 
+char *cheat_get_next_line(int32_t fd) // This is the cheat version that reads character by character
 {
-	char	*line;
+	char	*line; // Where we store the line to be returned
 	int32_t	buflen;
 	ssize_t	i;
 
 	i = -1;
 	line = malloc(10000);
-	while (line[i++] != '\n')
+	while (line[i++] != '\n') // We want to read until we reach a newline character
 	{
-		buflen = read(fd, &line[i], 1);
-		if (i > 0 && buflen == 0)
+		buflen = read(fd, &line[i], 1); // the return of line is -1 on error
+		if (i > 0 && buflen == 0) // checking for the end of the file
 			return (line);
-		if (buflen <= 0)
+		if (buflen <= 0) // checking for errors
 			return (free(line), NULL);
 	}
-	line[i] = '\0';
+	line[i] = '\0'; // always make sure to null terminate your strings!
 	return (line);
 }
 ```
