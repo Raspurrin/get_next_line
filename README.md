@@ -3,14 +3,26 @@ A function that reads one line from a specified file descriptor every time it is
 In this project we learn about memory leaks, static variables, the read function and the -D preprocessor flag.
 
 ### Index:
-+ [What is a memory leak](#what-is-a-memory-leak)
++ [Read and open function](#read-and-open-function)
++ [What is a memory leak?](#what-is-a-memory-leak)
 + [Debugging tools for memory leaks](#debugging-tools-for-memory-leaks) 
 + [Why we use BUFFERSIZE](#why-we-use-buffersize) 
 + [Static variable](#static-variable)
 + [Preprocessor -D flag](#preprocessor--d-flag)
 + [Tips on writing get_next_line](#tips-on-writing-get_next_line)
 
-## What is a memory leak
+## Read and open function
+[Read()](https://linux.die.net/man/2/read) reads from the given file descriptor in the first argument, into a buffer given by the second and how much is read is determined by the third argument. The return will be how many characters has been read or -1 on error. `read(fd, buffer, count)`.
+
+[Open()](https://man7.org/linux/man-pages/man2/open.2.html) opens a file to the given file descriptor. And then this file descriptor can be used as an argument to get_next_line. You can use flags with this for additional behaviour, like O_CREAT, which will create the file with the given name if it doesn't exist already. 
+```c
+int32_t fd
+
+fd = open("testfile", 0)
+```
+
+
+## What is a memory leak?
 A memory leak happens when you lose the reference to dynamically allocated memory. Like let's say you malloc something and then you replace 
 the address of what that pointer is pointing to, you wouldn't be able to control that memory anymore and it will still be taking up space in memory. 
 ```c
@@ -79,5 +91,13 @@ This does the same as:
 ```
 
 ## Tips on writing get_next_line
-_uhhhhhh make it what? before you start coding, make a sketch... Sketch out howww (pfffff... idk?!) How the static variables behave when the function is called multiple times. Be aware of error cases such as invalid file and how to handle them (not handle but detect them). uhhhh... aannd take good care that you return especially the last line. Learn to manage your buffer, because unlike in the cheat-version you actually have to do that xdd			
-Sidenote: maybe read the subject too (and not compile into an archive like before ;) )_ - [Clemens](https://profile.intra.42.fr/users/cdahlhof) 
+I think the biggest problem you encounter with writing get_next_line is when you read a bit after the newline character or when encountering multiple newline characters. Let's say your BUFFERSIZE=6 and you are reading this text file: 
+```
+Something\n
+\n
+Is here\n
+```
+The first itteration you will have read `Someth` and the next time you will read `ing\n\nI`. So when you join these values, you will end up with `Something\n\nI`. Now you will want to seperate `Something\n` from everything else, as that is the value you want to return, but you don't want to lose the information afther the newline character! The next time you call your function, the read function will continue where it has left off, so that information will be lost if not saved somewhere. This is where the static variable comes in! You can use this to retain this information for the next time you call the function. But since there is already another newline that has been read, you have to be extra careful you don't read any more in this case and the line is further seperated. 
+
+_uhhhhhh make it what? before you start coding, make a sketch... Sketch out howww (pfffff... idk?!) How the static variables behave when the function is called multiple times. Be aware of error cases such as invalid file and how to handle them (not handle but detect them). uhhhh... aannd take good care that you return especially the last line. Learn to manage your buffer, because unlike in the cheat-version you actually have to do that xdd.
+Sidenote: maybe read the subject too ~~(and not compile into an archive like before ;) )~~_ - [Clemens](https://profile.intra.42.fr/users/cdahlhof) 
