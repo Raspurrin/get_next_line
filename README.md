@@ -103,4 +103,4 @@ _uhhhhhh make it what? before you start coding, make a sketch... Sketch out howw
 Sidenote: maybe read the subject too ~~(and not compile into an archive like before ;) )~~_ - [Clemens](https://profile.intra.42.fr/users/cdahlhof) 
 
 
-_"Do not malloc a static variable"_ - [Kuba](https://profile.intra.42.fr/users/jkaczmar)
+_"Do not malloc a static variable or Russian maffia will come after you"_ - [Kuba](https://github.com/jakubkaczmarski)
