@@ -18,6 +18,11 @@ int32_t main(void)
 Memory leaks reduce the amount of memory left for other applications to utilise and can reduce performance or even cause your system to crash. 
 Memory allocation and freeing is done for you when you initialise variables on the stack. It keeps track of the order of execution of the functions. Whenever you exit a function and return to the previous function, the memory will automatically be freed. This is not the case when you allocate something with any function utilising malloc() and you are allocating memory on the heap. This does give you extra flexibility, as your allocation won't be lost when you return from the function where it was allocated.
 
+### Debugging tools for memory leaks
++ Valgrind - `valgrind --leaks-check=full ./executable` 
++ [AdressSanitizer (ASan)](https://www.osc.edu/resources/getting_started/howto/howto_use_address_sanitizer) - `gcc -Wall -Werror -Wextra test.c -fsanitize=address -o test` 
++ Leaks - `leaks --atExit --./executable`
+
 ## Why we use BUFFERSIZE
 ### What it means 
 You could just read everything character by character until you reach a newline character and return that line, that would be the easy solution. However, the tricky part to this project is that we have to read everything with a dynamic BUFFERSIZE. Meaning that the amount that is read at a time by the read function, should be changeable. For example, a sentence could be 10 characters long and if the BUFFERSIZE is set to 4, that means it will take three itterations to read that particular sentence, if it is set to 10, it would take only one itteration.
@@ -48,7 +53,7 @@ char *cheat_get_next_line(int32_t fd) // This is the cheat version that reads ch
 }
 ```
 ## Static variable
-BSS data segment 
+A [static variable](https://www.geeksforgeeks.org/static-variables-in-c/) is essentially like a global variable, but only within the scope of one function. Meaning that if you return to the function the static variable is delcared, it will have retained its previous value. A static variable is stored in the [BSS data segment](https://www.geeksforgeeks.org/memory-layout-of-c-program/), where global variables are also stored. 
 
 ## Preprocessor -D flag
 
