@@ -2,6 +2,13 @@
 A function that reads one line from a specified file descriptor every time it is called. 
 In this project we learn about memory leaks, static variables, the read function and the -D preprocessor flag.
 
+### Index:
++ [What is a memory leak](#what-is-a-memory-leak)
++ [Debugging tools for memory leaks](#debugging-tools-for-memory-leaks) 
++ [Why we use BUFFERSIZE](#why-we-use-buffersize) 
++ [Static variable](#static-variable)
++ [Preprocessor -D flag](#preprocessor--d-flag)
+
 ## What is a memory leak
 A memory leak happens when you lose the reference to dynamically allocated memory. Like let's say you malloc something and then you replace 
 the address of what that pointer is pointing to, you wouldn't be able to control that memory anymore and it will still be taking up space in memory. 
