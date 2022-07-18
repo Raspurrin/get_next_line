@@ -56,5 +56,18 @@ char *cheat_get_next_line(int32_t fd) // This is the cheat version that reads ch
 A [static variable](https://www.geeksforgeeks.org/static-variables-in-c/) is essentially like a global variable, but only within the scope of one function. Meaning that if you return to the function the static variable is delcared, it will have retained its previous value. A static variable is stored in the [BSS data segment](https://www.geeksforgeeks.org/memory-layout-of-c-program/), where global variables are also stored. 
 
 ## Preprocessor -D flag
+[Preprocessor flags](https://gcc.gnu.org/onlinedocs/gcc/Preprocessor-Options.html) control the preprocessor, which is ran before compilation of source files. The -D flag defines a macro. In the same way a #define would work in a header. 
+` gcc -Wall -Werror -Wextra getnextline.c -DBUFFERSIZE=42 -o getnextline` 
+This does the same as: 
+```
+#ifndef GET_NEXT_LINE_H
+# define GET_NEXT_LINE_H
+
+# ifndef BUFFER_SIZE
+#  define BUFFER_SIZE 42
+# endif
+
+#endif 
+```
 
 ## Tips on writing get_next_line
