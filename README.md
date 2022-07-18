@@ -79,4 +79,4 @@ This does the same as:
 ```
 
 ## Tips on writing get_next_line
-_uhhhhhh make it what? before the process runs make a sketch sketch out howww pfffffidk. How the static variablesss behave whennn the function is called multiple times. Be aware of error cases such as invalid file and how to handle them not handle but detect them uhhhh aannd take good care that you return even the last line. Learn to manage your buffer. Because unlike in the cheat version you actually have to do that xdd mouthing words_ - Clemens 
+_uhhhhhh make it what? before the process runs make a sketch... Sketch out howww pfffffidk. How the static variablesss behave whennn the function is called multiple times. Be aware of error cases such as invalid file and how to handle them not handle but detect them uhhhh aannd take good care that you return even the last line. Learn to manage your buffer. Because unlike in the cheat version you actually have to do that xdd - Clemens 
