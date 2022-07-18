@@ -79,4 +79,5 @@ This does the same as:
 ```
 
 ## Tips on writing get_next_line
-_uhhhhhh make it what? before you start coding, make a sketch... Sketch out howww (pfffff... idk?!) How the static variables behave when the function is called multiple times. Be aware of error cases such as invalid file and how to handle them (not handle but detect them). uhhhh... aannd take good care that you return especially the last line. Learn to manage your buffer, because unlike in the cheat-version you actually have to do that xdd_ - [Clemens](https://profile.intra.42.fr/users/cdahlhof) 
+_uhhhhhh make it what? before you start coding, make a sketch... Sketch out howww (pfffff... idk?!) How the static variables behave when the function is called multiple times. Be aware of error cases such as invalid file and how to handle them (not handle but detect them). uhhhh... aannd take good care that you return especially the last line. Learn to manage your buffer, because unlike in the cheat-version you actually have to do that xdd_
+Sidenote: maybe read the subject too (and not compile into an archive like before ;) )- [Clemens](https://profile.intra.42.fr/users/cdahlhof) 
