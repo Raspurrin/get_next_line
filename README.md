@@ -8,6 +8,7 @@ In this project we learn about memory leaks, static variables, the read function
 + [Why we use BUFFERSIZE](#why-we-use-buffersize) 
 + [Static variable](#static-variable)
 + [Preprocessor -D flag](#preprocessor--d-flag)
++ [Tips on writing get_next_line](#tips-on-writing-get_next_line)
 
 ## What is a memory leak
 A memory leak happens when you lose the reference to dynamically allocated memory. Like let's say you malloc something and then you replace 
@@ -26,7 +27,7 @@ Memory leaks reduce the amount of memory left for other applications to utilise 
 Memory allocation and freeing is done for you when you initialise variables on the stack. It keeps track of the order of execution of the functions. Whenever you exit a function and return to the previous function, the memory will automatically be freed. This is not the case when you allocate something with any function utilising malloc() and you are allocating memory on the heap. This does give you extra flexibility, as your allocation won't be lost when you return from the function where it was allocated.
 
 ### Debugging tools for memory leaks
-+ Valgrind - `valgrind --leaks-check=full ./executable` 
++ [Valgrind](https://www.youtube.com/watch?v=bb1bTJtgXrI) - `valgrind --leaks-check=full ./executable` 
 + [AdressSanitizer (ASan)](https://www.osc.edu/resources/getting_started/howto/howto_use_address_sanitizer) - `gcc -Wall -Werror -Wextra test.c -fsanitize=address -o test` 
 + Leaks - `leaks --atExit --./executable`
 
@@ -78,3 +79,4 @@ This does the same as:
 ```
 
 ## Tips on writing get_next_line
+uhhhhhh make it what? before the process runs make a sketch sketch out howww pfffffidk. How the static variablesss behave whennn the function is called multiple times. Be aware of error cases such as invalid file and how to handle them not handle but detect them uhhhh aannd take good care that you return even the last line. Learn to manage your buffer. Because unlike in the cheat version you actually have to do that xdd _mouthing words_ 
