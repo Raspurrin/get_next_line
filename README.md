@@ -1,4 +1,4 @@
-# get_next_line 🔨 Under construction!
+# get_next_line
 A function that reads one line from a specified file descriptor every time it is called. 
 In this project we learn about memory leaks, static variables, the read function and the -D preprocessor flag.
 
