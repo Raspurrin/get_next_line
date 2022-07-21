@@ -29,7 +29,7 @@ the address of what that pointer is pointing to, you wouldn't be able to control
 int32_t main(void)
 {
   char	*ptr;
-  int	a;
+  char	a;
   
   ptr = malloc(1); // allocates memory on the heap and stores that address in ptr. 
   ptr = &a; // Now you store the address of a in ptr and the reference to the previous allocation is lost in the void!
