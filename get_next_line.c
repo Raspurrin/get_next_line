@@ -71,10 +71,7 @@ static char	*read_line(char *line, char *buf, int fd)
 		buflen = read(fd, buf, BUFFER_SIZE);
 		buf[buflen] = '\0';
 		if (buflen <= 0 && !line[0])
-		{
-			free (line);
-			return (NULL);
-		}
+			return (free(line), NULL);
 		line = gnl_strjoin(line, buf);
 	}
 	return (line);
@@ -102,8 +99,7 @@ char	*get_next_line(int fd)
 	line = read_line(line, buf, fd);
 	if (!line)
 		return (NULL);
-	line = ft_trim(line, buf);
-	return (line);
+	return (ft_trim(line, buf));
 }
 
 // #include <stdio.h>
